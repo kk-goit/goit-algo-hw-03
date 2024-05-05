@@ -25,15 +25,15 @@ def do_copy(file: Path, dir_to: str):
 
 @file_error("Can't open dir")
 def find_and_copy(root: Path, dir_to: str, pref_path = ''):
-    """Search files in directories and copy it"""
+    """Search files in folder and copy it"""
     if root.is_dir():
-        print(f"Search files in {pref_path}{root.name}")
+        print(f"Search files in folder {pref_path}{root.name}")
         for item in root.iterdir():
             find_and_copy(item, dir_to, pref_path + root.name + "/")
     elif root.is_file():
         do_copy(root, dir_to)
     else:
-        print(f"{root.name} is not a file or dirrectory")
+        print(f"{root.name} is not a file or folder")
 
 
 if __name__ == "__main__":
@@ -43,13 +43,13 @@ if __name__ == "__main__":
         epilog =      'GoIT Tier-1 Algorithms'
     )
     parser.add_argument('dir_from', help="source dir")
-    parser.add_argument('dir_to', default="dist", nargs='?', help="distination dir")
+    parser.add_argument('dir_to', default="dist", nargs='?', help="distination folder")
 
     args = parser.parse_args()
     dist = Path(args.dir_to)
     if not dist.exists():
-        print(f"Destination '{args.dir_to}' dasn't exists")
+        print(f"Destination '{args.dir_to}' does not exists")
     elif not dist.is_dir():
-        print(f"Destination '{args.dir_to}' dasn't dirrectory")
+        print(f"Destination '{args.dir_to}' is not a folder")
     else:
         find_and_copy(Path(args.dir_from), args.dir_to)
